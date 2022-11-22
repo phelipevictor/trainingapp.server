@@ -20,7 +20,15 @@ const exerciseSchema = new Schema (
         'Cardio', 'Free Weight', 'Machine', 'Body Weight'    
         ],
         required: [true, 'Type of the exercise is required'],
-    }
+    },
+    imageUrl: String,
+    youtubeUrl: {
+        type: String,
+        validate: {
+          validator: (text) => text.indexOf('https://www.youtube.com/') === 0,
+          message: 'Youtube url must start with https://www.youtube.com/',
+        },
+      },
    },
    { Timestamps: true}
    )
