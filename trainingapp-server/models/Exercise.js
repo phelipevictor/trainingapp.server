@@ -21,6 +21,10 @@ const exerciseSchema = new Schema (
         ],
         required: [true, 'Type of the exercise is required'],
     },
+    description: {
+      type: String,
+      required: [true, 'Description of the exercise is required']
+    },
     imageUrl: String,
     youtubeUrl: {
         type: String,
@@ -29,6 +33,7 @@ const exerciseSchema = new Schema (
           message: 'Youtube url must start with https://www.youtube.com/',
         },
       },
+    exerciseId: { type: Schema.Types.ObjectId, ref: 'Exercise', required: true },
    },
    { Timestamps: true}
    )

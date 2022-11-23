@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const Training = require('../models/training.routes.js');
+const Training = require('../models/Training.js');
 
 const router = Router()
 
-router.post('/homepage/:trainingName', async (req, res) => {
+router.post('/homepage/:trainingName', async (req, res, next) => {
     const { trainingName } = req.params
     try { 
         const training = await Training.findOne({ name: trainingName })
@@ -17,11 +17,11 @@ router.post('/homepage/:trainingName', async (req, res) => {
 
         res.status(201).json(newTraining)
     } catch (error) {
-        res.status(500).json(error)
+        next(error)
     }
 })
 
-router.get('/exercise/:trainingName', async (req, res) => {
+router.get('/exercise/:trainingName', async (req, res, next) => {
     const { trainingName } = req.params
     try {
         const training = await Training.findOne({ name: trainingName })
@@ -33,7 +33,7 @@ router.get('/exercise/:trainingName', async (req, res) => {
         const trainings = await training.find({ trainingId: training._id })
         res.status(200).json(trainings)
     } catch (error) {
-        res.status(500).json(error)
+        next(error)
     }
 })
 

@@ -10,6 +10,11 @@ const trainingSchema = new Schema (
         required: [true, 'Name of the training is required'],
         unique: true,
     },
+    description: {
+      type: String,
+      required: [true, 'description of the division of the training is required']
+    },
+    trainingId: { type: Schema.Types.ObjectId, ref: 'Training', required: true },
    },
    { Timestamps: true}
    )
