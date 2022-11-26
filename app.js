@@ -18,9 +18,16 @@ app.use(cors({
 })
 )
 
-// Rotas
+// Rotas públicas
 
 app.use('/', authRoutes)
+
+// Middlewares
+
+app.use(require('./middlewares/auth.middleware'))
+
+// Rotas Privadas
+
 app.use('/', trainingRoutes)
 app.use('/', exerciseRoutes)
 app.use('/', userRoutes)

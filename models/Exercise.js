@@ -3,23 +3,23 @@ const { Schema, model } = require('mongoose')
 const exerciseSchema = new Schema (
   {
     name: {
-        type: String,
-        required: [true, 'Name is required'],
-        unique: true,
+      type: String,
+      required: [true, 'Name is required'],
+      unique: true,
     },
     muscularGroup: {
-        type: String,
-        Enum: [
-        'Back', 'Chest', 'Bíceps', 'Tríceps', 'Shoulders', 'ABS', 'Quads', 'Harmstrings', 'Calves', 'Compound', 'Gluteus', 'Traps', 'Forearm'
+      type: String,
+      Enum: [
+      'Back', 'Chest', 'Bíceps', 'Tríceps', 'Shoulders', 'ABS', 'Quads', 'Hamstrings', 'Calves', 'Compound', 'Gluteus', 'Traps', 'Forearm'
     ],
-        required: [true, 'Muscular Group is required'],
+      required: [true, 'Muscular Group is required'],
     },
-    muscularGroup: {
-        type: String,
-        Enum: [
-        'Cardio', 'Free Weight', 'Machine', 'Body Weight'    
-        ],
-        required: [true, 'Type of the exercise is required'],
+    type: {
+      type: String,
+      Enum: [
+      'Cardio', 'Free Weight', 'Machine', 'Body Weight', 'Barbell', 'Dumbbell'    
+      ],
+      required: [true, 'Type of the exercise is required'],
     },
     description: {
       type: String,
