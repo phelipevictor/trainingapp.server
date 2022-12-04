@@ -17,7 +17,7 @@ const exerciseSchema = new Schema (
     type: {
       type: String,
       Enum: [
-      'Cardio', 'Free Weight', 'Machine', 'Body Weight', 'Barbell', 'Dumbbell'    
+      'Cardio', 'Free Weight', 'Machine', 'Body Weight', 'Barbell', 'Dumbbell', 'CrossOver', 'Plate'    
       ],
       required: [true, 'Type of the exercise is required'],
     },

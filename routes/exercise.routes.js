@@ -8,7 +8,7 @@ router.post('/exercise/:exerciseName', async (req, res, next) => {
     try { 
         const exercise = await Exercise.findOne({ name: exerciseName })
 
-        if (!region) {
+        if (!exercise) {
             return res.status(404).json({ msg: 'Exercise not found' })
         }
 
@@ -27,7 +27,7 @@ router.get('/exercise/:exerciseName', async (req, res, next) => {
     try {
         const exercise = await Exercise.findOne({ name: exerciseName })
 
-        if (!region) {
+        if (!exercise) {
             return res.status(404).json({ msg: 'Exercise not found' })
         }
         throw new Error('Forced error')
