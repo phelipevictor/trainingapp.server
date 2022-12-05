@@ -25,6 +25,7 @@ const exerciseSchema = new Schema (
       type: String,
       required: [true, 'Description of the exercise is required']
     },
+    exerciseId: { type: Schema.Types.ObjectId, ref: 'Exercise', required: true, 
     imageUrl: String,
     youtubeUrl: {
         type: String,
