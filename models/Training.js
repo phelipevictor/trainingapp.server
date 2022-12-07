@@ -14,14 +14,14 @@ const trainingSchema = new Schema (
       type: String,
       required: [true, 'description of the division of the training is required']
     },
-    trainingId: { type: Schema.Types.ObjectId, ref: 'Training', required: true, 
+    trainingId: { type: Schema.Types.ObjectId, ref: 'Exercise'
     },
     type: {
       type: String,
       Enum: ['default', 'custom']
-    }
+    },
    },
    { Timestamps: true}
    )
 
-   module.exports = model('Traning', trainingSchema)
+   module.exports = model('Training', trainingSchema)

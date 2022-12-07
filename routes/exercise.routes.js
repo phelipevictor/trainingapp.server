@@ -3,20 +3,19 @@ const Exercise = require('../models/Exercise.js');
 
 const router = Router()
 
-//create exercise
+//create exercise FUNCIONANDO
 
-router.post('/exercise/:exerciseName', async (req, res, next) => {
-    const { exerciseName } = req.params
+router.post('/exercise', async (req, res, next) => {
+    const { name } = req.body
     try { 
-        const exercise = await Exercise.findOne({ name: exerciseName })
+        const exercise = await Exercise.findOne({ name })
 
-        if (!exercise) {
-            return res.status(404).json({ msg: 'Exercise not found' })
+        if (exercise) {
+            return res.status(404).json({ msg: 'Exercise already exists' })
         }
 
         const newExercise = await Exercise.create({
-        ...req.body, 
-        exerciseId: exercise._id,
+        ...req.body
         })
         res.status(201).json(newExercise)
     } catch (error) {
@@ -24,10 +23,27 @@ router.post('/exercise/:exerciseName', async (req, res, next) => {
     }
 })
 
-//get one exercise by Id
+//get all exercises FUNCIONANDO
 
-router.get('/exercise/:exerciseName', async (req, res, next) => {
-    const { exerciseName } = req.params
+router.get('/exercise', async (req, res, next) => {
+    const { exercise } = req.params
+    try {
+        const exercise = await Exercise.find({ })
+
+        if (!exercise) {
+            return res.status(404).json({ msg: 'Exercise not found' })
+        }
+
+        res.status(200).json(exercise)
+    } catch (error) {
+        next(error)
+    }
+})
+
+//get one exercise
+
+router.get('/exercise/:exerciseId', async (req, res, next) => {
+    const { exercise } = req.params
     try {
         const exercise = await Exercise.findOne({ name: exerciseName })
 
@@ -43,31 +59,11 @@ router.get('/exercise/:exerciseName', async (req, res, next) => {
     }
 })
 
-//get all exercises
+//update exercise
 
-router.get('/exercise', async (req, res, next) => {
-    const { exercise } = req.params
-    try {
-        const exercise = await Exercise.find({ name: exerciseName })
-
-        if (!exercise) {
-            return res.status(404).json({ msg: 'Exercise not found' })
-        }
-        throw new Error('Forced error')
-
-        const exercises = await exercise.find({ exerciseId: exercise._id })
-        res.status(200).json(exercises)
-    } catch (error) {
-        next(error)
-    }
-})
-
-//update exercise by Id
-
-router.put('/exercise/:id/', async (req, res) => {
-    const { id } = req.params;
-    const exerciseId = req.user.id
-    const {name, muscularGroup, type, description, imageUrl, youtubeUrl, exerciseId} = req.body
+router.put('/exercise/:exerciseId', async (req, res) => {
+    const { exerciseId } = req.params;
+    const {name, muscularGroup, type, description, imageUrl, youtubeUrl} = req.body
     try {
         const updatedExercise = await Exercise.findOneAndUpdate({_id: id, exercise: exerciseId}, req.body, {
             new: true
@@ -82,11 +78,10 @@ router.put('/exercise/:id/', async (req, res) => {
     }
 })
 
-//delete exercise by Id
+//delete exercise
 
-router.delete('/:exerciseName', async (req, res) => {
-    const { id } = req.params;
-    const exerciseId = req.exercise.id;
+router.delete('/exercises/:exerciseId', async (req, res) => {
+    const { exerciseId } = req.params;
     try {
         const exercise = await Exercise.findById(id)
         console.log(exerciseId, exercise.id)

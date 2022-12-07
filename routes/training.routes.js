@@ -3,18 +3,19 @@ const Training = require('../models/Training.js');
 
 const router = Router()
 
-//create training
+//create training FUNCIONANDO
 
-router.post('/mytraining/:trainingName', async (req, res, next) => {
-    const { trainingName } = req.params
+router.post('/training', async (req, res, next) => {
+    const { name } = req.body
     try { 
-        const training = await Training.findOne({ name: trainingName })
-        if(!training) {
-            return res.status(404).json({msg: 'Training not found'})
+        const training = await Training.findOne({ name })
+
+        if(training) {
+            return res.status(404).json({msg: 'Training already exists'})
         }
+
         const newTraining = await Training.create({
-            ...req.body,
-            trainingId: training._id,
+            ...req.body
         })
 
         res.status(201).json(newTraining)
@@ -23,10 +24,27 @@ router.post('/mytraining/:trainingName', async (req, res, next) => {
     }
 })
 
+//get all training FUNCIONANDO
+
+router.get('/training', async (req, res, next) => {
+    const { training } = req.params
+    try {
+        const training = await Training.find({ })
+
+        if (!training) {
+            return res.status(404).json({ msg: 'Training not found' })
+        }
+
+        res.status(200).json(training)
+    } catch (error) {
+        next(error)
+    }
+})
+
 //get one training
 
-router.get('/mytraining/:trainingName', async (req, res, next) => {
-    const { trainingName } = req.params
+router.get('/mytraining/:trainingId', async (req, res, next) => {
+    const { training } = req.params
     try {
         const training = await Training.findOne({ name: trainingName })
 
@@ -41,33 +59,14 @@ router.get('/mytraining/:trainingName', async (req, res, next) => {
     }
 })
 
-//get all training
+//update training
 
-router.get('/training', async (req, res, next) => {
-    const { training } = req.params
+router.put('/mytraining/:trainingId', async (req, res) => {
+    const { trainingId } = req.params
+    const {name, description, type} = req.body
     try {
-        const training = await Training.find({ name: trainingName })
-
-        if (!training) {
-            return res.status(404).json({ msg: 'Training not found' })
-        }
-        throw new Error('Forced error')
-
-        const trainings = await training.find({ trainingId: training._id })
-        res.status(200).json(trainings)
-    } catch (error) {
-        next(error)
-    }
-})
-
-//update training by Id
-
-router.put('/mytraining/:id/', async (req, res) => {
-    const { id } = req.params;
-    const trainingId = req.user.id
-    const {name, description, type, trainingId} = req.body
-    try {
-        const updatedTraining = await Training.findOneAndUpdate({_id: id, training: trainingId}, req.body, {
+        const training = await training.find({ trainingId })
+        const updatedTraining = await Training.findByIdAndUpdate({_id: id, training: trainingId}, req.body, {
             new: true
         });
         if (!updatedTraining) {
@@ -80,13 +79,12 @@ router.put('/mytraining/:id/', async (req, res) => {
     }
 })
 
-//delete training by Id
+//delete training
 
-router.delete('/mytraining/:trainingName', async (req, res) => {
-    const { id } = req.params;
-    const trainingId = req.training.id;
+router.delete('/mytraining/:trainingId', async (req, res) => {
+    const { trainingId } = req.params
     try {
-        const training = await Training.findById(id)
+        const training = await Training.findById(trainingId)
         console.log(trainingId, training.id)
             if (training.name.toString() !== trainingId) {
                 const error = new Error('Can not delete training from admin')
