@@ -40,20 +40,18 @@ router.get('/exercise', async (req, res, next) => {
     }
 })
 
-//get one exercise
+//get one exercise, ESTA RETORNANDO O PRIMEIRO EXERCICIO APENAS, NÃO RETORNA O CORRETO
 
 router.get('/exercise/:exerciseId', async (req, res, next) => {
-    const { exercise } = req.params
+    const { exerciseId } = req.params
     try {
-        const exercise = await Exercise.findOne({ name: exerciseName })
+        const exercise = await Exercise.findOne({ id: exerciseId })
 
         if (!exercise) {
             return res.status(404).json({ msg: 'Exercise not found' })
         }
-        throw new Error('Forced error')
 
-        const exercises = await exercise.find({ exerciseId: exercise._id })
-        res.status(200).json(exercises)
+        res.status(200).json(exercise)
     } catch (error) {
         next(error)
     }
@@ -61,11 +59,11 @@ router.get('/exercise/:exerciseId', async (req, res, next) => {
 
 //update exercise
 
-router.put('/exercise/:exerciseId', async (req, res) => {
+router.put('/exercise/:exerciseId/edit', async (req, res) => {
     const { exerciseId } = req.params;
     const {name, muscularGroup, type, description, imageUrl, youtubeUrl} = req.body
     try {
-        const updatedExercise = await Exercise.findOneAndUpdate({_id: id, exercise: exerciseId}, req.body, {
+        const updatedExercise = await Exercise.findByIdAndUpdate({_name, muscularGroup, type, description, imageUrl, youtubeURL, exerciseId }, req.body, {
             new: true
         });
         if (!updatedExercise) {
@@ -81,10 +79,9 @@ router.put('/exercise/:exerciseId', async (req, res) => {
 //delete exercise
 
 router.delete('/exercises/:exerciseId', async (req, res) => {
-    const { exerciseId } = req.params;
+    const { exerciseId } = req.params;  
     try {
-        const exercise = await Exercise.findById(id)
-        console.log(exerciseId, exercise.id)
+        const exercise = await Exercise.findByIdAndDelete(exerciseId)
             if (exercise.name.toString() !== exerciseId) {
                 const error = new Error('Can not delete exercise from admin')
                 throw error 

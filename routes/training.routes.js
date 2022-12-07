@@ -41,19 +41,18 @@ router.get('/training', async (req, res, next) => {
     }
 })
 
-//get one training
+//get one training, ESTA RETORNANDO O PRIMEIRO EXERCICIO APENAS, NÃO RETORNA O CORRETO
 
-router.get('/mytraining/:trainingId', async (req, res, next) => {
-    const { training } = req.params
+router.get('/training/:trainingId', async (req, res, next) => {
+    const { trainingId } = req.params
     try {
-        const training = await Training.findOne({ name: trainingName })
+        const training = await Training.findOne({ id: trainingId })
 
         if (!training) {
             return res.status(404).json({ msg: 'Training not found' })
         }
 
-        const trainings = await training.find({ trainingId: training._id })
-        res.status(200).json(trainings)
+        res.status(200).json(training)
     } catch (error) {
         next(error)
     }
@@ -61,12 +60,11 @@ router.get('/mytraining/:trainingId', async (req, res, next) => {
 
 //update training
 
-router.put('/mytraining/:trainingId', async (req, res) => {
+router.put('/training/:trainingId', async (req, res) => {
     const { trainingId } = req.params
     const {name, description, type} = req.body
     try {
-        const training = await training.find({ trainingId })
-        const updatedTraining = await Training.findByIdAndUpdate({_id: id, training: trainingId}, req.body, {
+        const updatedTraining = await Training.findByIdAndUpdate({ name, description, type, trainingId }, req.body, {
             new: true
         });
         if (!updatedTraining) {
@@ -84,8 +82,7 @@ router.put('/mytraining/:trainingId', async (req, res) => {
 router.delete('/mytraining/:trainingId', async (req, res) => {
     const { trainingId } = req.params
     try {
-        const training = await Training.findById(trainingId)
-        console.log(trainingId, training.id)
+        const training = await Training.findByIdAndDelete(trainingId)
             if (training.name.toString() !== trainingId) {
                 const error = new Error('Can not delete training from admin')
                 throw error 
