@@ -60,32 +60,29 @@ router.get('/training/:trainingId', async (req, res, next) => {
 
 //update training
 
-router.put('/training/:trainingId', async (req, res) => {
+router.put('/training/:trainingId/edit', async (req, res) => {
     const { trainingId } = req.params
-    const {name, description, type} = req.body
+    const { name, description, type } = req.body
     try {
-        const updatedTraining = await Training.findByIdAndUpdate({ name, description, type, trainingId }, req.body, {
+        const updatedTraining = await Training.findOneAndUpdate({ trainingId }, req.body, {
             new: true
         });
-        if (!updatedTraining) {
-            const error = new Error('Can not update training from admin')
-            throw error
-        }
+
         res.status(200).json(updatedTraining);
     } catch (error) {
         res.status(500).json({msg:`Can't update Training`, error})
     }
 })
 
-//delete training
+//delete training FUNCIONANDO
 
-router.delete('/mytraining/:trainingId', async (req, res) => {
+router.delete('/training/:trainingId/delete', async (req, res) => {
     const { trainingId } = req.params
     try {
         const training = await Training.findByIdAndDelete(trainingId)
             if (training.name.toString() !== trainingId) {
                 const error = new Error('Can not delete training from admin')
-                throw error 
+            
             }
             training.delete();
             res.status(202).json('Training was deleted')

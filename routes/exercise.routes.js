@@ -45,7 +45,7 @@ router.get('/exercise', async (req, res, next) => {
 router.get('/exercise/:exerciseId', async (req, res, next) => {
     const { exerciseId } = req.params
     try {
-        const exercise = await Exercise.findOne({ id: exerciseId })
+        const exercise = await Exercise.findOne({ exerciseId })
 
         if (!exercise) {
             return res.status(404).json({ msg: 'Exercise not found' })
@@ -76,15 +76,15 @@ router.put('/exercise/:exerciseId/edit', async (req, res) => {
     }
 })
 
-//delete exercise
+//delete exercise FUNCIONANDO
 
-router.delete('/exercises/:exerciseId', async (req, res) => {
+router.delete('/exercise/:exerciseId/delete', async (req, res) => {
     const { exerciseId } = req.params;  
     try {
         const exercise = await Exercise.findByIdAndDelete(exerciseId)
             if (exercise.name.toString() !== exerciseId) {
                 const error = new Error('Can not delete exercise from admin')
-                throw error 
+            
             }
             exercise.delete();
             res.status(202).json('Exercise was deleted')
