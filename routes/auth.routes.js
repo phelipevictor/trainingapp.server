@@ -5,49 +5,32 @@ const jwt = require('jsonwebtoken')
 
 const router  = Router()
 
-router.post('/signup', async (req, res, next) => {
-    const { username, email, password } = req.body
+//FUNCIONANDO
 
-    if(!email || !password || !username) {
-        res.status(400).json({ message: 'Provide email, password nad name' })
-        return
-    }
-
-    const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/
-
-    if(!emailRegex.test(email)){
-        res.status(400).json({ message: 'Provite a valid email' })
-        return
-    }
-
-    const passswordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}/
-
-    if (!passwordRegex.test(password)){
-        res.status(400).json({ message: 'Your password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter' })
-        return
-    }
-
+router.post('/signup', async (req, res) => {
     try {
-    const foundedUser = await User.findOne({ email })
-
-    if (foundedUser) {
-        res.status(400).json({ message: 'User already exists' })
-        return
-    }
-
-    const salt = bcrypt.genSaltSync(10)
-    const passwordHash = bcrypt.hashSync(password, salt)
-
-    const createdUser = await User.create({ username, email, passwordHash })
-
-    const { _id } = createdUser
-
-    res.status(201).json({ email, username, _id })
+        const { username, email, password } = req.body
+        if (!username || !email || !password) {
+            throw new Error ('all fields are required!')
+        }
+        const user = await User.findOne({email});
+        if (user) {
+            throw new Error('email already registered')
+        }
+        const salt = bcrypt.genSaltSync(12);
+        const hash = bcrypt.hashSync(password, salt)
+        const newUser = await User.create({
+            username,
+            email,
+            passwordHash: hash
+        })
+        res.status(201).json({username: newUser.username, email: newUser.email})
     } catch (error) {
-        next(error)
+        res.status(500).json({msg:`User not created: ${error.message}`})
     }
-
 })
+
+//FUNCIONANDO
 
 router.post('/login', async (req, res, next) => {
     
@@ -58,7 +41,7 @@ router.post('/login', async (req, res, next) => {
             res.status(400).json({ message: 'User not found' })
             return
         }
-        const compareHash = bcrypt.compareSync(password, username.passwordHash)
+        const compareHash = bcrypt.compareSync(password, user.passwordHash)
 
         if(!compareHash) {
             res.status(401).json({ message: 'Invalid password' })
@@ -67,7 +50,8 @@ router.post('/login', async (req, res, next) => {
 
         const payload = {
             id: user._id,
-            email: user.email,
+            username: user.name,
+            email,
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1y' })

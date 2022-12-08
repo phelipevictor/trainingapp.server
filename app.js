@@ -24,13 +24,13 @@ app.use('/', authRoutes)
 
 // Middlewares
 
-//app.use(require('./middlewares/auth.middleware'))
+app.use(require('./middlewares/auth.middleware'))
 
 // Rotas Privadas
 
 app.use('/', trainingRoutes)
 app.use('/', exerciseRoutes)
-//app.use('/', userRoutes)
+app.use('/', userRoutes)
 
 // Listen
 

@@ -19,7 +19,7 @@ const userSchema = new Schema (
         type: String,
         required: [true, 'Password is required'],
     },
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true 
+    userId: { type: Schema.Types.ObjectId, ref: 'User',
     },
    },
    { Timestamps: true}
