@@ -56,19 +56,16 @@ router.get('/exercise/:exerciseId', async (req, res, next) => {
     }
 })
 
-//update exercise NÃO ESTA FUNCIONANDO
+//update exercise
 
 router.put('/exercise/:exerciseId/edit', async (req, res) => {
     const { exerciseId } = req.params;
-    const {name, muscularGroup, type, description, imageUrl, youtubeUrl} = req.body
+    const { name, muscularGroup, type, description, imageUrl, youtubeUrl } = req.body
     try {
-        const updatedExercise = await Exercise.findByIdAndUpdate({_name, muscularGroup, type, description, imageUrl, youtubeURL }, req.body, {
+        const updatedExercise = await Exercise.findByIdAndUpdate(exerciseId, req.body, {
             new: true
         });
-        if (!updatedExercise) {
-            const error = new Error('Can not update exercise from admin')
-            throw error
-        }
+
         res.status(200).json(updatedExercise);
     } catch (error) {
         res.status(500).json({msg:`Can't update Exercise`, error})

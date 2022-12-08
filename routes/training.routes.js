@@ -58,13 +58,13 @@ router.get('/training/:trainingId', async (req, res, next) => {
     }
 })
 
-//update training NÃO ESTA FUNCIONANDO
+//update training
 
 router.put('/training/:trainingId/edit', async (req, res) => {
     const { trainingId } = req.params
     const { name, description, type} = req.body
     try {
-        const updatedTraining = await Training.findOneAndUpdate({ trainingId }, req.body, {
+        const updatedTraining = await Training.findByIdAndUpdate(trainingId, req.body, {
             new: true
         });
 
