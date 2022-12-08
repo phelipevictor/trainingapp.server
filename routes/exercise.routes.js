@@ -40,13 +40,12 @@ router.get('/exercise', async (req, res, next) => {
     }
 })
 
-//get one exercise, ESTA RETORNANDO O PRIMEIRO EXERCICIO APENAS, NÃO RETORNA O CORRETO
+//get one exercise FUNCIONANDO
 
 router.get('/exercise/:exerciseId', async (req, res, next) => {
     const { exerciseId } = req.params
     try {
-        const exercise = await Exercise.findOne({ exerciseId })
-
+        const exercise = await Exercise.findById(exerciseId)
         if (!exercise) {
             return res.status(404).json({ msg: 'Exercise not found' })
         }
@@ -57,13 +56,13 @@ router.get('/exercise/:exerciseId', async (req, res, next) => {
     }
 })
 
-//update exercise
+//update exercise NÃO ESTA FUNCIONANDO
 
 router.put('/exercise/:exerciseId/edit', async (req, res) => {
     const { exerciseId } = req.params;
     const {name, muscularGroup, type, description, imageUrl, youtubeUrl} = req.body
     try {
-        const updatedExercise = await Exercise.findByIdAndUpdate({_name, muscularGroup, type, description, imageUrl, youtubeURL, exerciseId }, req.body, {
+        const updatedExercise = await Exercise.findByIdAndUpdate({_name, muscularGroup, type, description, imageUrl, youtubeURL }, req.body, {
             new: true
         });
         if (!updatedExercise) {

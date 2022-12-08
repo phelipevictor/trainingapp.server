@@ -41,12 +41,12 @@ router.get('/training', async (req, res, next) => {
     }
 })
 
-//get one training, ESTA RETORNANDO O PRIMEIRO EXERCICIO APENAS, NÃO RETORNA O CORRETO
+//get one training FUNCIONANDO
 
 router.get('/training/:trainingId', async (req, res, next) => {
     const { trainingId } = req.params
     try {
-        const training = await Training.findOne({ id: trainingId })
+        const training = await Training.findById(trainingId)
 
         if (!training) {
             return res.status(404).json({ msg: 'Training not found' })
@@ -58,7 +58,7 @@ router.get('/training/:trainingId', async (req, res, next) => {
     }
 })
 
-//update training
+//update training NÃO ESTA FUNCIONANDO
 
 router.put('/training/:trainingId/edit', async (req, res) => {
     const { trainingId } = req.params
