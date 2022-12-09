@@ -62,7 +62,7 @@ router.get('/training/:trainingId', async (req, res, next) => {
 
 router.put('/training/:trainingId/edit', async (req, res) => {
     const { trainingId } = req.params
-    const { name, description, type, exercises } = req.body
+    const { name, description, type, exercises, level } = req.body
     try {
         const updatedTraining = await Training.findByIdAndUpdate(trainingId, req.body, {
             new: true

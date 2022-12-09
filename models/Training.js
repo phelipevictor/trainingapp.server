@@ -20,6 +20,12 @@ const trainingSchema = new Schema (
       type: String,
       Enum: ['default', 'custom']
     },
+    level: {
+      type: String,
+      Enum: [
+        'Beginner', 'Intermediate', 'Advanced'
+      ],
+    }
    },
    { Timestamps: true}
    )
