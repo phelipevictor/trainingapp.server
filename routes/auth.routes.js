@@ -5,8 +5,6 @@ const jwt = require('jsonwebtoken')
 
 const router  = Router()
 
-//FUNCIONANDO
-
 router.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body
@@ -29,8 +27,6 @@ router.post('/signup', async (req, res) => {
         res.status(500).json({msg:`User not created: ${error.message}`})
     }
 })
-
-//FUNCIONANDO
 
 router.post('/login', async (req, res, next) => {
     

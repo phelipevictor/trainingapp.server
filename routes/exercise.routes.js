@@ -3,7 +3,7 @@ const Exercise = require('../models/Exercise.js');
 
 const router = Router()
 
-//create exercise FUNCIONANDO
+//create exercise
 
 router.post('/exercise', async (req, res, next) => {
     const { name } = req.body
@@ -23,7 +23,7 @@ router.post('/exercise', async (req, res, next) => {
     }
 })
 
-//get all exercises FUNCIONANDO
+//get all exercises
 
 router.get('/exercise', async (req, res, next) => {
     const { exercise } = req.params
@@ -40,7 +40,7 @@ router.get('/exercise', async (req, res, next) => {
     }
 })
 
-//get one exercise FUNCIONANDO
+//get one exercise
 
 router.get('/exercise/:exerciseId', async (req, res, next) => {
     const { exerciseId } = req.params
@@ -72,7 +72,7 @@ router.put('/exercise/:exerciseId/edit', async (req, res) => {
     }
 })
 
-//delete exercise FUNCIONANDO
+//delete exercise
 
 router.delete('/exercise/:exerciseId/delete', async (req, res) => {
     const { exerciseId } = req.params;  

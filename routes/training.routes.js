@@ -3,7 +3,7 @@ const Training = require('../models/Training.js');
 
 const router = Router()
 
-//create training FUNCIONANDO
+//create training
 
 router.post('/training', async (req, res, next) => {
     const { name } = req.body
@@ -24,12 +24,12 @@ router.post('/training', async (req, res, next) => {
     }
 })
 
-//get all training FUNCIONANDO
+//get all training
 
 router.get('/training', async (req, res, next) => {
     const { training } = req.params
     try {
-        const training = await Training.find({ })
+        const training = await Training.find()
 
         if (!training) {
             return res.status(404).json({ msg: 'Training not found' })
@@ -41,12 +41,12 @@ router.get('/training', async (req, res, next) => {
     }
 })
 
-//get one training FUNCIONANDO
+//get one training
 
 router.get('/training/:trainingId', async (req, res, next) => {
     const { trainingId } = req.params
     try {
-        const training = await Training.findById(trainingId)
+        const training = await Training.findById(trainingId).populate('exercises')
 
         if (!training) {
             return res.status(404).json({ msg: 'Training not found' })
@@ -62,7 +62,7 @@ router.get('/training/:trainingId', async (req, res, next) => {
 
 router.put('/training/:trainingId/edit', async (req, res) => {
     const { trainingId } = req.params
-    const { name, description, type} = req.body
+    const { name, description, type, exercises } = req.body
     try {
         const updatedTraining = await Training.findByIdAndUpdate(trainingId, req.body, {
             new: true
@@ -74,7 +74,7 @@ router.put('/training/:trainingId/edit', async (req, res) => {
     }
 })
 
-//delete training FUNCIONANDO
+//delete training
 
 router.delete('/training/:trainingId/delete', async (req, res) => {
     const { trainingId } = req.params

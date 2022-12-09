@@ -14,8 +14,8 @@ const trainingSchema = new Schema (
       type: String,
       required: [true, 'description of the division of the training is required']
     },
-    trainingId: { type: Schema.Types.ObjectId, ref: 'Exercise'
-    },
+    exercises: [{ type: Schema.Types.ObjectId, ref: 'Exercise'
+    }],
     type: {
       type: String,
       Enum: ['default', 'custom']
