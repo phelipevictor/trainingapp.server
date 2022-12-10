@@ -4,17 +4,19 @@ const trainingSchema = new Schema (
   {
     name: {
       type: String,
-      Enum: [
-      'FullBody', 'AB', 'ABC', 'ABCD', 'ABCDE', 'ABCDEF'
-      ],
       required: [true, 'Name of the training is required'],
-      unique: true,
+    },
+    group: {
+      type: String,
+      enum: [
+        'FullBody', 'AB', 'ABC', 'ABCD', 'ABCDE', 'ABCDEF'
+        ],
     },
     description: {
       type: String,
       required: [true, 'description of the division of the training is required']
     },
-    exercises: [{ type: Schema.Types.ObjectId, ref: 'Exercise'
+    exercises: [{ type: Schema.Types.ObjectId, ref: 'ExerciseTraining',
     }],
     type: {
       type: String,

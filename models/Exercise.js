@@ -9,7 +9,7 @@ const exerciseSchema = new Schema (
     },
     muscularGroup: {
       type: String,
-      Enum: [
+      enum: [
       'Back', 'Chest', 'Bíceps', 'Tríceps', 'Shoulders', 'ABS', 'Quads', 'Hamstrings', 'Calves', 'Compound', 'Gluteus', 'Traps', 'Forearm'
     ],
       required: [true, 'Muscular Group is required'],
@@ -25,7 +25,6 @@ const exerciseSchema = new Schema (
       type: String,
       required: [true, 'Description of the exercise is required']
     },
-    exerciseId: { type: Schema.Types.ObjectId, ref: 'Training'},
     imageUrl: String,
     youtubeUrl: {
         type: String,
