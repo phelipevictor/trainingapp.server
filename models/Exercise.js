@@ -14,7 +14,7 @@ const exerciseSchema = new Schema (
     ],
       required: [true, 'Muscular Group is required'],
     },
-    type: {
+    equipament: {
       type: String,
       Enum: [
       'Cardio', 'Free Weight', 'Machine', 'Body Weight', 'Barbell', 'Dumbbell', 'CrossOver', 'Plate'    

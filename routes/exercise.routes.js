@@ -60,7 +60,7 @@ router.get('/exercise/:exerciseId', async (req, res, next) => {
 
 router.put('/exercise/:exerciseId/edit', async (req, res) => {
     const { exerciseId } = req.params;
-    const { name, muscularGroup, type, description, imageUrl, youtubeUrl } = req.body
+    const { name, muscularGroup, equipament, description, imageUrl, youtubeUrl } = req.body
     try {
         const updatedExercise = await Exercise.findByIdAndUpdate(exerciseId, req.body, {
             new: true
