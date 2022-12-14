@@ -40,6 +40,23 @@ router.get('/exercise', async (req, res, next) => {
     }
 })
 
+//  get exercise by muscularGroup 
+
+router.get('/exercise/bymuscularGroup/:muscularGroup', async (req, res, next) => {
+    const { muscularGroup } = req.params
+    try {
+        const exercise = await Exercise.find({ muscularGroup })
+
+        if (!exercise) {
+            return res.status(404).json({ msg: 'Muscular group not found' })
+        }
+
+        res.status(200).json(exercise)
+    } catch (error) {
+        next(error)
+    }
+})
+
 //get one exercise
 
 router.get('/exercise/:exerciseId', async (req, res, next) => {
@@ -60,7 +77,7 @@ router.get('/exercise/:exerciseId', async (req, res, next) => {
 
 router.put('/exercise/:exerciseId/edit', async (req, res) => {
     const { exerciseId } = req.params;
-    const { name, muscularGroup, equipament, description, imageUrl, youtubeUrl } = req.body
+    const { name, muscularGroup, type, description, imageUrl, youtubeUrl } = req.body
     try {
         const updatedExercise = await Exercise.findByIdAndUpdate(exerciseId, req.body, {
             new: true
