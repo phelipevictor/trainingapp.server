@@ -14,7 +14,7 @@ const app = express()
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors({
-    origin: 'http://localhost:3003',
+    origin: 'https://639c758fe82afe000884a06a--stately-biscuit-4995fa.netlify.app/',
 })
 )
 
