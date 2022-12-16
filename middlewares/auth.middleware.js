@@ -5,7 +5,7 @@ const auth = (req, res, next) => {
         const bearer = req.get('Authorization')
         if(!bearer) {
             const error = new Error('token not found');
-            error.status = 400;
+            error.status = 401;
             throw error
         }
         const token = bearer.split(' ')[1];
@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
         req.user = {...decodedToken};
         next()
     } catch (error) {
-        res.status(400).json(error.message)
+        res.status(401).json(error.message)
     }
 }
 
