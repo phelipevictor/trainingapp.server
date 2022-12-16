@@ -102,7 +102,7 @@ router.post('/training/:trainingId/addexercise', async (req,res) => {
         const exercise = await Exercise.findById(exerciseId)
         if (!training.group.includes(type)) 
         {
-        res.status(400).json(`Training Group is ${training.group}`)
+        return res.status(400).json(`Training Group is ${training.group}`)
         }
         const exerciseTraining = await ExerciseTraining.create({ exerciseId, type, trainingId });
         await Training.findByIdAndUpdate(trainingId, { $push:{ exercises: exerciseTraining.id}})

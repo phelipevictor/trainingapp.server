@@ -6,7 +6,7 @@ const exerciseTrainingSchema = new Schema (
     },
     type: {
       type: String,
-      enum: ['Fullbody', 'A', 'B', 'C', 'D', 'E', 'F'],
+      enum: ['FullBody', 'A', 'B', 'C', 'D', 'E', 'F'],
     },
     trainingId: { type: Schema.Types.ObjectId, ref: 'Training'},
    },
